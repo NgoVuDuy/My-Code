@@ -1,0 +1,97 @@
+import java.util.Scanner;
+
+public class Student {
+    private String name;
+    private String mssv;
+    private double gpa;
+
+    public Student(String name, String mssv, double gpa) {
+        this.name = name;
+        this.mssv = mssv;
+        this.gpa = gpa;
+    }
+
+    public Student() {
+        name = "";
+        mssv = "";
+        gpa = 0.0;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getMssv() {
+        return mssv;
+    }
+
+    public double getGpa() {
+        return gpa;
+    }
+}
+
+public class StudentManager {
+    private static final int Max_length = 100;
+    private Student[] students = new Student[Max_length];
+    private int numStudents = 0;
+
+    public void addStudent() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter student name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter student ID: ");
+        String mssv = scanner.nextLine();
+        double gpa = 0.0;
+        boolean validGpa = false;
+        while (!validGpa) {
+            try {
+                System.out.print("Enter student GPA: ");
+                gpa = Double.parseDouble(scanner.nextLine());
+                validGpa = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid GPA, please enter a number.");
+            }
+        }
+        students[numStudents] = new Student(name, mssv, gpa);
+        numStudents++;
+    }
+
+    public void displayStudents() {
+        if (numStudents == 0) {
+            System.out.println("There are no students to display.");
+        } else {
+            for (int i = 0; i < numStudents; i++) {
+                System.out.println(students[i].getName() + "\n" + students[i].getMssv() + "\n" + students[i].getGpa());
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        StudentManager sm = new StudentManager();
+        boolean quit = false;
+        while (!quit) {
+            System.out.println("\nEnter your choice:\n1. Add a student\n2. Display all students\n3. Quit");
+            int choice = 0;
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid choice, please enter a number.");
+                continue;
+            }
+            switch (choice) {
+                case 1:
+                    sm.addStudent();
+                    break;
+                case 2:
+                    sm.displayStudents();
+                    break;
+                case 3:
+                    quit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice, please enter a valid option.");
+            }
+        }
+    }
+}
