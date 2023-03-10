@@ -1,0 +1,83 @@
+import java.util.Scanner;
+
+class Customer {
+  private String name;
+  private String email;
+  private int num, old;
+  private Account account[];
+  public Customer() {
+    name = new String();
+    email = new String();
+    old = 1;
+  }
+  public void inPutCustomer() {
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Enter the customer name: ");
+    name = scanner.nextLine();
+    System.out.print("Enter the customer email: ");
+    email = scanner.nextLine();
+    boolean validOld = false;
+    while(!validOld) {
+      try {
+        System.out.print("Enter the customer old: ");
+        old = Integer.parseInt(scanner.nextLine());
+        validOld = true;
+      }
+      catch(NumberFormatException e) {
+        System.out.println("Invalid, please enter a number");
+      }
+    }
+    System.out.print("Enter the number of account: ");
+    num = scanner.nextInt();
+    for(int i = 0; i < num; i ++) {
+      account[i] = new Account();
+    }
+    Account ac = new Account();
+    for(int i = 0; i < num; i ++) {
+      ac.inPutAccount();
+      account[i] =  ac;
+    }
+  }
+  public void outPutCustomer() {
+    System.out.println("Name: " + name + "\n" + "Emai: " + email + "\n" + "Old: " + old );
+    for(int i = 0; i < num; i++) {
+      System.out.println("Number of account: " + account[i] + "\n");
+    }
+  }
+}
+class Account {
+  private String accountNumber;
+  private float balance;
+  private Customer owner;
+  public Account() {
+    accountNumber = new String();
+    balance = 0;
+    owner = new Customer();
+  }
+  public void inPutAccount() {
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Enter the account number: ");
+    accountNumber = scanner.nextLine();
+    System.out.print("Ennter the balance: ");
+    balance = scanner.nextFloat();
+    //System.out.print("Enter the owner: ");
+    //owner = scanner.nextLine();
+  }
+  public String getAccountNumber() {
+    return accountNumber;
+  }
+  public float getBalance() {
+    return balance;
+  }
+}
+class Bank {
+  private Customer customers[];
+  private Account accounts[];
+}
+public class CustomerManagement {
+  public static void main(String[] args){
+    Customer customer = new Customer();
+    customer.inPutCustomer();
+    customer.outPutCustomer();
+  }
+}
