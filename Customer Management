@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 class Customer {
   private String name;
@@ -29,30 +30,31 @@ class Customer {
     }
     System.out.print("Enter the number of account: ");
     num = scanner.nextInt();
+    account = new Account[num];
     for(int i = 0; i < num; i ++) {
       account[i] = new Account();
     }
-    Account ac = new Account();
     for(int i = 0; i < num; i ++) {
-      ac.inPutAccount();
-      account[i] =  ac;
+      account[i].inPutAccount();
     }
   }
   public void outPutCustomer() {
-    System.out.println("Name: " + name + "\n" + "Emai: " + email + "\n" + "Old: " + old );
+    System.out.println("Name: " + name + "\n" + "Email: " + email + "\n" + "Old: " + old );
+    DecimalFormat decimalFormat = new DecimalFormat("#.##");
     for(int i = 0; i < num; i++) {
-      System.out.println("Number of account: " + account[i] + "\n");
+      System.out.println("Number account: " + account[i].getAccountNumber() + " Balance: " + decimalFormat.format(account[i].getBalance())
+ + "\n");
     }
   }
 }
 class Account {
   private String accountNumber;
   private float balance;
-  private Customer owner;
+  //private Customer owner;
   public Account() {
     accountNumber = new String();
     balance = 0;
-    owner = new Customer();
+    //owner = new Customer();
   }
   public void inPutAccount() {
     Scanner scanner = new Scanner(System.in);
@@ -74,7 +76,7 @@ class Bank {
   private Customer customers[];
   private Account accounts[];
 }
-public class CustomerManagement {
+public class Main {
   public static void main(String[] args){
     Customer customer = new Customer();
     customer.inPutCustomer();
