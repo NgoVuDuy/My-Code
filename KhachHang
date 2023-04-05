@@ -1,0 +1,105 @@
+import java.util.Scanner;
+
+class KhachHang {
+  private String id, hoten, diachi;
+  public void nhap()  {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Nhap id, ho ten va dia chi cua khach hang: ");
+    id = sc.nextLine();
+    hoten = sc.nextLine();
+    diachi = sc.nextLine();
+  }
+  public void in() {
+    System.out.println("id: " + id + "ho ten: " + hoten + "dia chi: " + diachi);
+  }
+}
+class HangHoa {
+  private int maso;
+  private String ten, ngaysanxuat;
+  private ChiTiet chitiet = new ChiTiet();
+  public void nhap() {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Nhap ma so, ten, ngay san xuat, so luong va don gia cua hang hoa: ");
+    maso = sc.nextInt();
+    ten = sc.nextLine();
+    ngaysanxuat = sc.nextLine();
+    chitiet.nhap();
+  }
+  public void in() {
+    System.out.println("ma so: " + maso + "ten hang hoa: " + ten + "ngay san xuat: " + ngaysanxuat + chitiet);
+  }
+}
+class ChiTiet {
+  private int soluong;
+  private int dongia;
+  public void nhap() {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Nhap so luong. don gia cho hang hoa: ");
+    soluong = sc.nextInt();
+    dongia = sc.nextInt();
+  }
+  public void in() {
+    System.out.println("so luong: " + soluong + "don gia: " + dongia);
+  }
+  public String toString() {
+    return "so luong: " + soluong + "don gia: " + dongia;
+  }
+}
+class Date {
+  private int d, m, y;
+  public void nhap() {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Nhap thong tin ngay, thang, nam");
+    d = sc.nextInt();
+    m = sc.nextInt();
+    y = sc.nextInt();
+  }
+  public void in() {
+    System.out.println("Ngay: " + d + "Thang: " + m + "Nam: " + y);
+  }
+  public String toString() {
+    return "Ngay: " + d + "Thang: " + m + "Nam: " + y;
+  }
+}
+class KhachHangVip extends KhachHang{
+  private int tiengiam;
+  private Date date;
+  public void nhap() {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Nhap so tien duoc giam: ");
+    tiengiam = sc.nextInt();
+    date.nhap();
+  }
+  public void in() {
+    System.out.println("tien duoc giam: " + tiengiam + date);
+  } 
+}
+class HoaDon {
+  private int so;
+  private String tieude;
+  private Date date;
+  private HangHoa hanghoa;
+  private KhachHang khachhang;
+  public void nhap() {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Nhap so, tieu de: ");
+    so = sc.nextInt();
+    tieude = sc.nextLine();
+    date.nhap();
+    hanghoa.nhap();
+    khachhang.nhap();
+  }
+  public void in() {
+    System.out.println("so: " + so + "tieu de: " + tieude);
+    date.in();
+    hanghoa.in();
+    khachhang.in();
+  }
+}
+public class main {
+  public static void main(String[] args) {
+    HoaDon h = new HoaDon();
+    h.nhap();
+    h.in();
+  }
+}
