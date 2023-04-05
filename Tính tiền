@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <math.h>
+
+#define MAX_DENOMINATIONS 10
+
+int denominations[MAX_DENOMINATIONS];
+char names[MAX_DENOMINATIONS][30];
+int n;
+
+void read_denominations() {
+    FILE *f = fopen("ATM.txt", "r");
+    n = 0;
+    while (!feof(f) && n < MAX_DENOMINATIONS) {
+        fscanf(f, "%d %[^\n]s", &denominations[n], names[n]);
+        n++;
+    }
+    fclose(f);
+}
+
+void bubble_sort_denominations() {
+    int i, j;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+            if (denominations[j] < denominations[j + 1]) {
+                int temp = denominations[j];
+                denominations[j] = denominations[j + 1];
+                denominations[j + 1] = temp;
+
+                char temp_name[30];
+                strcpy(temp_name, names[j]);
+                strcpy(names[j], names[j + 1]);
+                strcpy(names[j + 1], temp_name);
+            }
+        }
+    }
+}
+
+void atm_withdrawal(int amount) {
+    int i, count;
+    count = 0;
+    printf("So tien can rut: %d\n", amount);
+    for (i = 0; i < n; i++) {
+        int num_notes = floor(amount / denominations[i]);
+        if (num_notes != 0) {
+            count += num_notes;
+            printf("%d to %s\n", num_notes, names[i]);
+        }
+        amount = amount - num_notes * denominations[i];
+    }
+    printf("Tong so to tien can tra: %d\n", count);
+}
+
+int main() {
+    int amount;
+    read_denominations();
+    bubble_sort_denominations();
+    printf("Nhap so tien can rut: ");
+    scanf("%d", &amount);
+    atm_withdrawal(amount);
+    return 0;
+}
