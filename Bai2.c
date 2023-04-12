@@ -1,9 +1,10 @@
 #include<stdio.h>
+#define size 100
 typedef struct {
 	float do_dai;
 	int dau, cuoi;
 } canh;
-void read_file(char file_name[], int canh a[], int n) {
+void read_file(char file_name[], canh a[], int *n) {
 	int i, j , t;
 	float temp;
 	FILE *f;
@@ -13,7 +14,7 @@ void read_file(char file_name[], int canh a[], int n) {
 		return;
 	}
 	fscanf(f, "%d", n);
-	int k;
+	int k=0;
 	for(i=0; i < *n; i++) {
 		for(j = i; j < *n; j ++) {
 			if(i == j) {
@@ -65,7 +66,7 @@ int dinh_cap_3(canh PA[], int k, canh moi) {
 	while(i < k && dem <3) {
 		if(moi.dau == PA[i].dau || moi.dau == PA[i].cuoi)
 			dem ++;
-	i ++
+	i ++;
 	}
 	while(i<k && dem < 3) {
 		if(moi.cuoi = PA[i].dau || moi.cuoi == PA[i].cuoi)
@@ -74,15 +75,61 @@ int dinh_cap_3(canh PA[], int k, canh moi) {
 	}
 	return dem==3;
 }
+void init_forest(int parent[], int n) {
+	int i;
+	for(i = 0; i < n; i ++) {
+		parent[i] = i;
+	}
+}
+int find_root(int parent[], int u) {
+	while(u != parent[u]) {
+		u = parent[u];
+		return u;
+	}
+}
+int chu_trinh(int r_dau, int r_cuoi) {
+	return(r_dau == r_cuoi);
+}
+void update_forest(int parent[], int r1, int r2) {
+	parent[r2] = r1;
+}
+void greedy(canh ds_canh[], int n, canh PA[]) {
+	int i, j;
+	int parent[n];
+	init_forest(parent, n);
+	int r_dau, r_cuoi;
+	j = 0;
+	for(i = 0; i < (n - 1)/2 && j < n - 1; i ++) {
+		r_dau = find_root(parent, ds_canh[i].dau);
+		r_cuoi = find_root(parent, ds_canh[i].cuoi);
+		if(!dinh_cap_3(PA, j, ds_canh[i]) && !chu_trinh(r_dau, r_cuoi)){
+			PA[j] = ds_canh[i];
+			j ++;
+			update_forest(parent, r_dau, r_cuoi);
+		}
+	}
+	for(;i < n * (n - 1)/2; i ++) {
+		r_dau = find_root(parent, ds_canh[i].dau);
+		r_cuoi = find_root(parent, ds_canh[i].cuoi);
+		if((!dinh_cap_3(PA, n - 1, ds_canh[i])) && (chu_trinh(r_dau, r_cuoi))) {
+			PA[n - 1] = ds_canh[i];
+			break;
+		}
+	}
+}
 int main() {
 	canh ds_canh[size];
 	int n;
 	printf("Phuong an TPS dung thu thuat tham an: \n");
 	read_file("TSP.txt", ds_canh, &n);
 	printf("Danh sach cac canh cua do thi: \n");
-	in_ds_canh(ds)
+	in_ds_canh(ds_canh, n *(n - 1)/2, 0);
+	canh PA[n];
+	greedy(ds_canh, n, PA);
+	printf("\nPhuong An: \n");
+	in_ds_canh(PA, n, 1);
+	return 0;
 }
-
 
 
 
