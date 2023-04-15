@@ -1,0 +1,198 @@
+package buoi5;
+
+import java.util.Scanner;
+
+public class KhachHang {
+	private String ten, cmnd, diaChi,soDT;
+	
+	public KhachHang(){
+		ten=new String();
+		cmnd=new String();
+		diaChi=new String();
+		soDT=new String();
+	}
+	public KhachHang(KhachHang a){
+		this.ten= new String(a.ten);
+		this.cmnd= new String(a.cmnd);
+		this.soDT= new String(a.soDT);
+		this.diaChi= new String(a.diaChi);
+	}
+	
+	KhachHang(String ten,String cmnd,String diaChi, String soDT){
+		this.ten=new String(ten);
+		this.cmnd = new String(cmnd);
+		this.soDT= new String(soDT);
+		this.diaChi =new String(diaChi);
+	}
+	public void nhapthongtinKH() {
+		Scanner sc= new Scanner(System.in);
+		System.out.print("Nhap ten khach hang: ");
+		ten= sc.nextLine();
+		System.out.print("Nhap cmnd khach hang: ");
+		cmnd=sc.nextLine();
+		System.out.print("Nhap so dien thoai khach hang: ");
+		soDT= sc.nextLine();
+		System.out.print("Nhap dia chi khach hang: ");
+		diaChi=sc.nextLine();
+	}
+	public void hienThiThongTinKH() {
+		System.out.println("Ten khach hang la: "+ ten);
+		System.out.println("Cmnd khach hang la: "+ cmnd);
+		System.out.println("So dien thoai khach hang la: "+ soDT);
+		System.out.println("Dia chi khach hang la: "+ diaChi);
+	}
+}
+package buoi5;
+
+import java.util.Scanner;
+
+public class KhachHangVip extends KhachHang {
+		private float tilegiam;
+		private MyDate date;
+		public KhachHangVip(){
+			super();
+			date = new MyDate();
+			tilegiam = 0.0f;
+		}
+		public KhachHangVip(String ten1,String cmnd1,String diaChi1, String soDT1,MyDate date, float tilegiam){
+			super(ten1, cmnd1, diaChi1, soDT1);
+			this.date = new MyDate(date);
+			this.tilegiam = tilegiam;
+		}
+		public KhachHangVip(KhachHangVip a){
+			super(a);
+			this.date = new MyDate(a.date);
+			this.tilegiam = a.tilegiam;
+		}
+		public void nhapthongtinKH() {
+			Scanner sc= new Scanner(System.in);
+			super.nhapthongtinKH();
+			date.nhapNgayLapHoaDon();
+			System.out.print("Nhap ti le giam cua khach hang: ");
+			tilegiam =sc.nextFloat();
+		}
+	
+		public void hienThiThongTinKH() {
+			super.hienThiThongTinKH();
+			date.hienThi();
+			System.out.print("Ti le giam cua khach hang: " + tilegiam);
+		}
+
+}
+package buoi5;
+
+import java.util.Scanner;
+
+public class MyDate {
+	private int ngay, thang, nam;
+	   public MyDate(){
+		   ngay =1; thang=1;nam=2003;
+		   
+	   }
+	   public MyDate(MyDate m) {
+		   ngay = m.ngay;
+		   thang = m.thang;
+		   nam = m.nam;
+	   }
+	   public MyDate(int n,int t, int m){
+		   ngay=n; thang=t; nam=m;
+	   }
+	   public void hienThi() {
+		   System.out.println(ngay+"/"+thang+"/"+nam);
+	   }
+	   public String toString() {
+		   return  ngay + "/" + thang + "/" + nam;
+	   }
+	   public boolean hopLe() {
+		 int ngayTrongThang[]= {0,31,28,31,30,31,30,31,31,30,31,30,31};
+	     if(nam % 400==0 || (nam %4==0 && nam%100!=0))
+	    	 ngayTrongThang[2]= 29;
+	     if(thang<1 || thang>12) return false;
+	     return(ngay>=1 && ngay<=ngayTrongThang[thang]);
+	   }
+	   public void nhapNgayLapHoaDon() {
+		 do {  
+			Scanner sc = new Scanner(System.in);		
+			System.out.print("Nhap ngay: ");
+			ngay=sc.nextInt();
+			System.out.print("Nhap thang: ");
+			thang=sc.nextInt();
+			System.out.print("Nhap nam: ");
+			nam=sc.nextInt();
+		if(!this.hopLe()) System.out.println("Ngay thang nhap vao khong hop le, vui long nhap lai!");
+	   }
+		 while(!this.hopLe());
+	   }
+	   public int getNgay() {
+		   return ngay;
+	   }
+	   public int getThang() {
+		   return thang;
+	   }
+	   public int getNam() {
+		   return nam;
+	   }  
+}
+package buoi5;
+
+import java.util.Scanner;
+
+public class HoaDon {
+       private MyDate ngayMua;
+       private String sanPham;
+       private KhachHang[] ds;
+       private int sokhachhang;
+       public HoaDon(){
+    	   this.ngayMua= new MyDate();
+    	   this.sanPham = new String();
+    	   this.sokhachhang = 0;
+    	   ds = new KhachHang[sokhachhang];
+       }
+       public void nhapHoaDon() {
+    	   Scanner sc= new Scanner(System.in);
+    	   System.out.print("nhap san pham: ");
+    	   sanPham= sc.nextLine();
+    	   System.out.println("nhap ngay xuat hoa don: ");
+    	   ngayMua.nhapNgayLapHoaDon();
+    	   System.out.print("Nhap so luong khach hang: ");
+    	   sokhachhang = sc.nextInt();
+    	   System.out.println("chon khach hang can nhap: ");
+    	   System.out.println("1. khach hang thuong");
+    	   System.out.println("2. khach hang vip");
+    	   int  c = 0;
+    	   c = sc.nextInt();
+    	   int i;
+    	   if(c == 1) {
+    		   ds = new KhachHang[sokhachhang];
+    		   for(i = 0; i < sokhachhang; i ++) {
+        		   ds[i] = new KhachHang();
+        		   ds[i].nhapthongtinKH();
+        	   }
+    	   }
+    	   if(c == 2) {
+    		   ds = new KhachHangVip[sokhachhang];
+    		   for(i = 0; i < sokhachhang; i ++)
+    			   ds[i] = new KhachHangVip();
+    		   	   ds[i].nhapthongtinKH();
+    	   }
+       }
+       public void xuatHoaDon() {
+    	   System.out.print("Ten san pham: " + sanPham);
+    	   System.out.print("Ngay xuat hoa don: " + ngayMua);
+    	   for(int i = 0; i < sokhachhang; i++) {
+    		   ds[i].hienThiThongTinKH();
+    	   }
+       }
+       
+}
+package buoi5;
+
+public class SdHoaDon {
+  public static void main(String[] args) {
+	HoaDon a= new HoaDon();
+	System.out.println("Nhap thong tin hoa don: ");
+	a.nhapHoaDon();
+	System.out.println("Thong tin hoa don a la: ");
+	a.xuatHoaDon();
+  }
+}
