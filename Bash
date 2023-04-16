@@ -1,0 +1,63 @@
+echo "Bai 1"
+cd ~
+pwd
+ls -ld /home/runner
+echo "Bai 2"
+cd /
+pwd
+ls -l
+echo "Bai 3"
+#drwxr-xr-- 2 abc users 1024 Mar 7 12:35 dd
+echo -e "Là một thư mục tên dd\nQuyền của người dùng là rwx\nQuyền của nhóm người dùng là rx\nQuyền của người dùng khác là r\nKích thước dữ liệu là 1024\nSố liên kết đến thư mục là 2\nLần sửa đổi cuối cùng vào Mar 7 12:35"
+echo -e "Bài 4\nTập tin chứa cấu hình hệ thống là /ect."
+echo -e "Bài 5\nHai tập tin chứa thư viện lệnh là /lib và usr"
+echo -e "Bài 6\n / là thư mục gốc của hệ thống tập tin và /root là thư mục home của người dùng root."
+pwd
+cd ~
+pwd
+cd .
+pwd
+cd ..
+pwd
+#cd NgoVuDuy
+#pwd
+echo -e"Bài 8\ncd mail Thư mục hiện hành là /var/spool/mail\ncd ../../spool/mail Thư mục hiện hành là /var/spool/mail" 
+echo "Bài 9"
+cd /var
+ls -l | grep -c '^d'
+ls -l /sbin
+echo "Thư mục /sbin chứa các lệnh hệ thống cần thiết để quản lý và điều khiển hệ thống, vì vậy nó chỉ được truy cập bởi người dùng root hoặc người dùng có đặc quyền."
+#mkdir /var/user1 
+echo "Để tạo thư mục mới userxxx là thư mục con của /var, ta sử dụng lệnh sudo mkdir /var/userxxx. Lệnh này yêu cầu quyền quản trị để thực thi, do đó thông báo yêu cầu nhập mật khẩu quản trị sẽ được hiển thị."
+#cd ~
+#mkdir ddddd
+#cd ddddd
+#echo "This is a message" > fffff
+#rmdir ddddd
+ls -a ~
+tail -n 4 /etc/passwd
+tail -n 6 /etc/group
+tail -n 8 /etc/login.defs
+tail -n 20 /etc/login.defs
+Lệnh more: dùng để hiển thị nội dung của một tập tin dài theo từng trang. Khi hiển thị nội dung, more sẽ chỉ hiển thị một phần của tập tin, khi cần hiển thị thêm nội dung, người dùng có thể sử dụng phím space để xem thêm các trang tiếp theo hoặc phím enter để xem từng dòng. Ví dụ: more file.txt.
+
+Lệnh less: tương tự như more, less cũng được sử dụng để hiển thị nội dung của một tập tin dài theo từng trang, tuy nhiên less có nhiều tính năng hơn so với more. Nó cho phép người dùng tìm kiếm nội dung, lùi lại trang trước đó, chuyển đến trang cuối cùng hoặc đầu tiên của tập tin, và có thể di chuyển trên và xuống theo từng dòng hoặc theo từng trang. Ví dụ: less file.txt.
+
+Lệnh head: được sử dụng để hiển thị nội dung của một tập tin từ đầu đến một số dòng được chỉ định (mặc định là 10 dòng). Ví dụ: head file.txt hoặc head -n 20 file.txt để hiển thị 20 dòng đầu tiên.
+
+Lệnh tail: tương tự như head, tail được sử dụng để hiển thị nội dung của một tập tin, tuy nhiên nó hiển thị từ cuối tập tin và đi ngược lại với head. Mặc định là 10 dòng cuối cùng của tập tin. Ví dụ: tail file.txt hoặc tail -n 20 file.txt để hiển thị 20 dòng cuối cùng.
+
+Lệnh cat: được sử dụng để hiển thị nội dung của một tập tin trên màn hình. Khác với more và less, cat không phân trang và hiển thị toàn bộ nội dung của tập tin. 
+find . -name "*.html"
+find / -user root
+find /usr -type d -name "lib"
+find / -name "filename" 
+find / -mtime -1 -type f
+find /path/to/directory -type d -empty
+grep -n root /etc/passwd
+grep -vn root /etc/passwd
+grep -r "echo" /etc/init.d/*
+grep -v '^#' /etc/login.defs
+grep -E '/bin/bash$' /etc/passwd
+
+
