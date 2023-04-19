@@ -9,7 +9,7 @@
 
 typedef struct {
 	char TenDV[20];
-	int TL, GT, PA;
+	int TL, GT, PA, SL;
 } DoVat; //Khai bao mot ctdl quan li cac do vat
 
 typedef int bang[50][100];// Ba lo co trong luong toi da 99 va co toi da 50 do vat
@@ -22,7 +22,7 @@ DoVat *ReadFromFile(int *W, int *n){ //Khoi tao ham doc file du lieu
 	 dsdv=(DoVat*)malloc(sizeof(DoVat)); //Cap phat bo nho cho bien dsdv
 	 int i=0;//Khoi tao bien vi tri i;
  	 while (!feof(f)){//Duyet qua file f
-	   fscanf(f, "%d%d%[^\n]",&dsdv[i].TL,&dsdv[i].GT,&dsdv[i].TenDV);//Doc lan luot cac gia tri TL, GT, ten do vat vao mang dsdv
+	   fscanf(f, "%d%d%d%[^\n]",&dsdv[i].TL,&dsdv[i].GT,&dsdv[i].SL,&dsdv[i].TenDV);//Doc lan luot cac gia tri TL, GT, ten do vat vao mang dsdv
 	   dsdv[i].PA=0;//Khoi tao phuong an bang 0 o tat ca do vat
 	   i++;//Tang bien chay i len 1 dv
 	   dsdv=(DoVat*)realloc(dsdv,sizeof(DoVat)*(i+1));  
@@ -35,16 +35,16 @@ DoVat *ReadFromFile(int *W, int *n){ //Khoi tao ham doc file du lieu
 void InDSDV(DoVat *dsdv ,int n, int W){
 	int i, TongTL=0, TongGT=0;
 	printf("\nPhuong an Cai Ba lo 1 dung thuat toan QUY HOACH DONG nhu sau:\n");
-		printf("|---|------------------|----------|---------|-----------|\n");
-		printf("|STT|     Ten Do Vat   | T Luong  | Gia Tri | Phuong an |\n");
-		printf("|---|------------------|----------|---------|-----------|\n");
+		printf("|---|------------------|----------|---------|----------|-----------|\n");
+		printf("|STT|     Ten Do Vat   | T Luong  | Gia Tri | So Luong | Phuong an |\n");
+		printf("|---|------------------|----------|---------|----------|-----------|\n");
 	for(i=0;i<n;i++){
-		printf("|%2d |%-18s|%5d     |%5d    |%6d     |\n",
-		i+1,dsdv[i].TenDV,dsdv[i].TL,dsdv[i].GT,dsdv[i].PA);
+		printf("|%2d |%-18s|%5d     |%5d    |%6d    |%6d     |\n",
+		i+1,dsdv[i].TenDV,dsdv[i].TL,dsdv[i].GT,dsdv[i].SL,dsdv[i].PA);
 		TongTL=TongTL+dsdv[i].PA * dsdv[i].TL;
 		TongGT=TongGT+dsdv[i].PA * dsdv[i].GT;
 	}	
-	printf("|---|------------------|----------|---------|-----------|\n");	
+	printf("|---|------------------|----------|---------|----------|-----------|\n");	
 	printf("Trong luong cua ba lo = %-9d\n",W);
 	printf("Tong trong luong = %-9d\n",TongTL);
 	printf("Tong gia tri = %-9d\n",TongGT);
@@ -58,6 +58,8 @@ void TaoBang(DoVat *dsdv,int n,int W, bang F,bang X){
 	//Bo do vat dau tien vao bang
  	for(V= 0; V<=W; V++) {
  		X[0][V] = V/dsdv[0].TL;//So do vat toi da co the bo
+ 		if(X[0][V] > dsdv[0].SL)
+ 			X[0][V] = dsdv[0].SL;
  		F[0][V] = X[0][V] * dsdv[0].GT;//Gia tri tuong ung voi so do vat
  	}
 	
@@ -68,6 +70,8 @@ void TaoBang(DoVat *dsdv,int n,int W, bang F,bang X){
 			 FMax = F[k-1][V] ;//GTLN = gia tri do vat phia truoc do
 			 XMax = 0;//So luong do vat lon nhat co the bo vao 
 			 yk = V/dsdv[k].TL;//So luong do vat k co the bo duoc vao bang
+			 if(yk > dsdv[k].SL)
+			 	yk = dsdv[k].SL;
 			 for(xk = 1; xk<=yk; xk++)//Tat ca cac truong hop co the bo do vat vao bang
 			 	if(F[k-1][V-xk*dsdv[k].TL]+xk*dsdv[k].GT>FMax){//Tim ra truong hop bo do vat k co gia tri lon nhat
 			 		FMax=F[k-1][V-xk*dsdv[k].TL]+xk*dsdv[k].GT;//Cap nhat lai gia tri lon nhat
